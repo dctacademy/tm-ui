@@ -1,5 +1,9 @@
 import axios from '../config/axios'
 
+export const setUser = (user) => {
+    return { type: 'SET_USER', payload: user }
+}
+
 export const startLoginUser = (formData, redirect) => {
     return (dispatch) => {
         axios.post('/users/login', formData)
@@ -9,12 +13,42 @@ export const startLoginUser = (formData, redirect) => {
                 } else {
                     alert('successfully logged in')
                     localStorage.setItem('authToken', response.data.token)
-                    redirect()
+                    axios.get('/users/account', { 
+                        headers: {
+                            'x-auth' : localStorage.getItem('authToken')
+                        }
+                    })
+                    .then((response) => {
+                        const user = response.data 
+                        dispatch(setUser(user))
+                        redirect()
+                    })
+                    .catch((err) => {
+                        alert(err)
+                    })
+                    
                 }
             })
             .catch((err) => {
                 console.log(err)
             })
+    }
+}
+
+export const startGetUser = () =>{ 
+    return (dispatch) => {
+        axios.get('/users/account', {
+            headers: {
+                'x-auth': localStorage.getItem('authToken')
+            }
+        })
+        .then((response) => {
+            const user = response.data 
+            dispatch(setUser(user))
+        })
+        .catch((err) => {
+            alert(err)
+        })
     }
 }
 
