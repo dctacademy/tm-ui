@@ -1,10 +1,13 @@
 import React from 'react' 
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
 
 function App(props){
     return (
-        <div>
-            <h1>Ticket Master</h1>
-        </div>
+        <BrowserRouter>
+            <div>
+                <h1>Ticket Master</h1>
+            </div>
+        </BrowserRouter>
     )
 }
 
