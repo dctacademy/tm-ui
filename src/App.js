@@ -5,10 +5,11 @@ import { connect } from 'react-redux'
 import Home from './components/static/Home'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
-
-
-
+import { startUserLogout } from './actions/userAction'
 function App(props){
+    const handleLogout = () => {
+        props.dispatch(startUserLogout())
+    }
     return (
         <BrowserRouter>
             <div>
@@ -18,7 +19,7 @@ function App(props){
                     Object.keys(props.user).length !== 0 ? (
                         <div>
                             <Link to="/account">Account</Link>
-                            <Link to="#" >Logout</Link>
+                            <Link to="#" onClick={handleLogout}>Logout</Link>
                         </div> 
                     ) : (
                         <div>

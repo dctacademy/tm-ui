@@ -26,7 +26,6 @@ export const startLoginUser = (formData, redirect) => {
                     .catch((err) => {
                         alert(err)
                     })
-                    
                 }
             })
             .catch((err) => {
@@ -66,5 +65,23 @@ export const startRegisterUser = (formData, redirect) => {
             .catch((err) => {
                 console.log(err)
             })
+    }
+}
+
+export const startUserLogout = () => {
+    return (dispatch) => {
+        axios.delete('/users/logout', {
+            headers: {
+                'x-auth' : localStorage.getItem('authToken')
+            }
+        })
+        .then((response) => {
+            if(response.data.notice) {
+                alert(response.data.notice)
+                localStorage.removeItem('authToken')
+                dispatch(setUser({}))
+                window.location.href = "/"
+            }
+        })
     }
 }
