@@ -13,6 +13,8 @@ export const startLoginUser = (formData, redirect) => {
                 } else {
                     alert('successfully logged in')
                     localStorage.setItem('authToken', response.data.token)
+
+                    // Promise.all()
                     axios.get('/users/account', { 
                         headers: {
                             'x-auth' : localStorage.getItem('authToken')
@@ -26,6 +28,9 @@ export const startLoginUser = (formData, redirect) => {
                     .catch((err) => {
                         alert(err)
                     })
+                    // get customers
+                    // get departments
+                    // get tickets 
                 }
             })
             .catch((err) => {
